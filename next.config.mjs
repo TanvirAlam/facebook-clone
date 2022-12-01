@@ -13,5 +13,12 @@ const config = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  images: {
+    domains: [
+      "platform-lookaside.fbsbx.com",
+      "firebasestorage.googleapis.com",
+      "1000logos.net"
+    ]
+  }
 };
 export default config;
