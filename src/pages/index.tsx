@@ -1,13 +1,14 @@
-import { type NextPage } from "next";
 import Head from "next/head";
-import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import type { GetSessionParams } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 
-import { trpc } from "../utils/trpc";
 import Header from "../components/Header/Header";
+import Login from "../components/Login/Login";
 
-const Home: NextPage = () => {
-  const hello = trpc.example.hello.useQuery({ text: "from tRPC" });
+const Home = () => {
+  const { data: session, status } = useSession();
+
+  if (status !== "authenticated") return <Login />;
 
   return (
     <>
@@ -16,11 +17,22 @@ const Home: NextPage = () => {
         <meta name="description" content="Facebook-Clone" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <Header />
-      </main>
+      <Header />
+      <main></main>
     </>
   );
 };
 
 export default Home;
+
+export async function getServerSideProps(
+  context: GetSessionParams | undefined
+) {
+  const session = await getSession(context);
+
+  return {
+    props: {
+      session,
+    },
+  };
+}

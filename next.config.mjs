@@ -17,7 +17,8 @@ const config = {
     domains: [
       "platform-lookaside.fbsbx.com",
       "firebasestorage.googleapis.com",
-      "1000logos.net"
+      "1000logos.net",
+      "mdbcdn.b-cdn.net",
     ]
   }
 };
