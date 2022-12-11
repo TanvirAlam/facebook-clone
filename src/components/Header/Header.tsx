@@ -22,21 +22,23 @@ import HeaderIcon from "./HeaderIcon";
 import { useSession } from "next-auth/react";
 import { signOut } from "next-auth/react";
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-type Props = {};
-
-export default function Header({}: Props) {
+export default function Header() {
   const { data: session, status } = useSession();
+
+  const loggedInImage = session?.user?.image
+    ? session?.user?.image
+    : "https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png";
 
   return (
     <div className="br-white shodow-md sticky top-0 z-50 flex items-center p-2 lg:px-5">
       <div className="flex items-center">
         <Image
-          src="https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png"
+          src={loggedInImage}
           alt="logo"
           width={40}
           height={40}
           layout="fixed"
+          className="rounded-full"
         />
         <div className="ml-2 flex items-center rounded-full bg-gray-100 p-2">
           <MagnifyingGlassIcon className="h-6 pr-2 text-gray-600" />
@@ -56,7 +58,7 @@ export default function Header({}: Props) {
           <HeaderIcon Icon={UserGroupIcon} />
         </div>
       </div>
-      <div className="intems-center flex sm:space-x-2">
+      <div className="flex items-center gap-4 sm:space-x-2">
         <ArrowLeftOnRectangleIcon className="icons" onClick={signOut} />
         <p className="whitespace-nowrap font-semibold">{session?.user?.name}</p>
         <BellIcon className="icons" />
