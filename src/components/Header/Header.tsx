@@ -30,7 +30,7 @@ export default function Header() {
     : "https://1000logos.net/wp-content/uploads/2021/04/Facebook-logo.png";
 
   return (
-    <div className="br-white shodow-md sticky top-0 z-50 flex items-center p-2 lg:px-5">
+    <div className="br-white sticky top-0 z-50 flex items-center p-2 shadow-md lg:px-5">
       <div className="flex items-center">
         <Image
           src={loggedInImage}

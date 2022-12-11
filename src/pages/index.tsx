@@ -4,6 +4,7 @@ import { getSession, useSession } from "next-auth/react";
 
 import Header from "../components/Header/Header";
 import Login from "../components/Login/Login";
+import SideBar from "../components/SideBar/SideBar";
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -11,15 +12,17 @@ const Home = () => {
   if (status !== "authenticated") return <Login />;
 
   return (
-    <>
+    <div className="h-screen overflow-hidden bg-gray-100">
       <Head>
         <title>Facebook Clone</title>
         <meta name="description" content="Facebook-Clone" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Header />
-      <main></main>
-    </>
+      <main className="flex">
+        <SideBar />
+      </main>
+    </div>
   );
 };
 
