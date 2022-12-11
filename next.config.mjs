@@ -19,6 +19,17 @@ const config = {
       "firebasestorage.googleapis.com",
       "1000logos.net",
       "mdbcdn.b-cdn.net",
+      "upload.wikimedia.org",
+      "avatars.githubusercontent.com",
+      "s.iw.ro",
+      "pubs.acs.org",
+      "pbs.twimg.com",
+      "images.squarespace-cdn.com",
+      "media.gq-magazine.co.uk",
+      "i.ytimg.com",
+      "assets.mi6-hq.com",
+      "universe.dk",
+      "wallpaper.dog"
     ]
   }
 };

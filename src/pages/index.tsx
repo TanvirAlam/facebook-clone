@@ -5,6 +5,7 @@ import { getSession, useSession } from "next-auth/react";
 import Header from "../components/Header/Header";
 import Login from "../components/Login/Login";
 import SideBar from "../components/SideBar/SideBar";
+import Feeds from "../components/Feeds/Feeds";
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -21,6 +22,7 @@ const Home = () => {
       <Header />
       <main className="flex">
         <SideBar />
+        <Feeds />
       </main>
     </div>
   );
