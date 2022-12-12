@@ -6,7 +6,13 @@ import { BiHappyAlt } from "react-icons/bi";
 import { BsCameraReelsFill } from "react-icons/bs";
 import { BsFillCameraFill } from "react-icons/bs";
 import { db, storage } from "../../../firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { ref, uploadString, getDownloadURL } from "firebase/storage";
 
 export default function InputBox() {
@@ -18,6 +24,7 @@ export default function InputBox() {
   const sendPost = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const dbInstance = collection(db, "posts");
+    const newCityRef = doc(collection(db, "posts"));
 
     if (!inputRef?.current?.value) return;
 
@@ -33,7 +40,7 @@ export default function InputBox() {
 
         uploadString(storageRef, imageToPost, "data_url").then((snapshot) => {
           getDownloadURL(snapshot.ref).then((url) => {
-            addDoc(dbInstance, { postImage: url });
+            setDoc(newCityRef, { postImage: url });
           });
         });
 
