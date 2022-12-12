@@ -29,7 +29,12 @@ const config = {
       "i.ytimg.com",
       "assets.mi6-hq.com",
       "universe.dk",
-      "wallpaper.dog"
+      "wallpaper.dog",
+      "www.billboard.com",
+      "m.media-amazon.com",
+      "i.discogs.com",
+      "jackson-source.com",
+      "t0.gstatic.com"
     ]
   }
 };

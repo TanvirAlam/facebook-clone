@@ -6,6 +6,7 @@ import Header from "../components/Header/Header";
 import Login from "../components/Login/Login";
 import SideBar from "../components/SideBar/SideBar";
 import Feeds from "../components/Feeds/Feeds";
+import Widgets from "../components/Widgets/Widgets";
 
 const Home = () => {
   const { data: session, status } = useSession();
@@ -23,6 +24,7 @@ const Home = () => {
       <main className="flex">
         <SideBar />
         <Feeds />
+        <Widgets />
       </main>
     </div>
   );
