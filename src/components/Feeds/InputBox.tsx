@@ -1,16 +1,33 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRef } from "react";
 
 import { BiHappyAlt } from "react-icons/bi";
 import { BsCameraReelsFill } from "react-icons/bs";
 import { BsFillCameraFill } from "react-icons/bs";
+import { db } from "../../../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function InputBox() {
   const { data: session } = useSession();
 
+  const inputRef = useRef(null);
+
   const sendPost = (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    console.log("send");
+    const dbInstance = collection(db, "posts");
+
+    if (!inputRef?.current?.value) return;
+
+    addDoc(dbInstance, {
+      message: inputRef.current.value,
+      name: session?.user?.name,
+      email: session?.user?.email,
+      image: session?.user?.image,
+      timestamp: serverTimestamp(),
+    });
+
+    inputRef.current.value = "";
   };
 
   return (
@@ -29,6 +46,7 @@ export default function InputBox() {
             type="text"
             className="h-12 flex-grow rounded-full bg-gray-100 px-5 focus:outline-none"
             placeholder={`What is on your mind, ${session?.user?.name}?`}
+            ref={inputRef}
           />
           <button hidden type="submit" onClick={sendPost}>
             Submit
