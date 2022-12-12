@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 import { BiHappyAlt } from "react-icons/bi";
 import { BsCameraReelsFill } from "react-icons/bs";
@@ -10,8 +10,9 @@ import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 export default function InputBox() {
   const { data: session } = useSession();
-
+  const [imageToPost, setImageToPost] = useState(null);
   const inputRef = useRef(null);
+  const filePickerRef = useRef(null);
 
   const sendPost = (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -28,6 +29,24 @@ export default function InputBox() {
     });
 
     inputRef.current.value = "";
+  };
+
+  const addImageToPosts = (e: { target: any; preventDefault: () => void }) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file: File = e.target.files[0];
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+
+    reader.onload = (readerEvent: any) => {
+      setImageToPost(readerEvent.target.result);
+    };
+  };
+
+  const removeImage = () => {
+    setImageToPost(null);
   };
 
   return (
@@ -52,6 +71,19 @@ export default function InputBox() {
             Submit
           </button>
         </form>
+        {imageToPost && (
+          <div
+            onClick={removeImage}
+            className="flex transform cursor-pointer flex-col filter transition duration-150 hover:scale-105 hover:brightness-110"
+          >
+            <img
+              src={imageToPost}
+              alt="sampleImage"
+              className="h-10 object-contain"
+            />
+            <p className="text-center text-xs text-red-500">Remove</p>
+          </div>
+        )}
       </div>
 
       <div className="flex justify-evenly border-t p-3">
@@ -59,9 +91,18 @@ export default function InputBox() {
           <BsCameraReelsFill className="h-7 text-2xl text-red-500" />
           <p className="text-xs sm:text-sm xl:text-base">Live Video</p>
         </div>
-        <div className="InputIcons">
+        <div
+          onClick={() => filePickerRef?.current?.click()}
+          className="InputIcons"
+        >
           <BsFillCameraFill className="h-7 text-2xl text-green-500" />
           <p className="text-xs sm:text-sm xl:text-base">Photo/Video</p>
+          <input
+            ref={filePickerRef}
+            hidden
+            type="file"
+            onChange={addImageToPosts}
+          />
         </div>
         <div className="InputIcons">
           <BiHappyAlt className="h-7 text-2xl text-yellow-500" />
