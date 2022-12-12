@@ -5,8 +5,9 @@ import { useRef, useState } from "react";
 import { BiHappyAlt } from "react-icons/bi";
 import { BsCameraReelsFill } from "react-icons/bs";
 import { BsFillCameraFill } from "react-icons/bs";
-import { db } from "../../../firebase";
+import { db, storage } from "../../../firebase";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { ref, uploadString, getDownloadURL } from "firebase/storage";
 
 export default function InputBox() {
   const { data: session } = useSession();
@@ -26,6 +27,18 @@ export default function InputBox() {
       email: session?.user?.email,
       image: session?.user?.image,
       timestamp: serverTimestamp(),
+    }).then((doc) => {
+      if (imageToPost) {
+        const storageRef = ref(storage, `posts/${doc.id}`);
+
+        uploadString(storageRef, imageToPost, "data_url").then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            addDoc(dbInstance, { postImage: url });
+          });
+        });
+
+        removeImage();
+      }
     });
 
     inputRef.current.value = "";
@@ -101,6 +114,7 @@ export default function InputBox() {
             ref={filePickerRef}
             hidden
             type="file"
+            accept="image/*"
             onChange={addImageToPosts}
           />
         </div>
