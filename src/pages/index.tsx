@@ -37,6 +37,14 @@ export async function getServerSideProps(
 ) {
   const session = await getSession(context);
 
+  /* const posts = await db.collection("posts".orderBy("timestamp", "dexc").get())
+
+  const docs = posts.docs.map(post => ({
+    id: post.id,
+    ...post.data(),
+    timestamp: null
+  })) */
+
   return {
     props: {
       session,

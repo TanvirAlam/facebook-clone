@@ -15,6 +15,7 @@ export default function Posts() {
 
   return (
     <div>
+      {/* when get data from getServerProps iterate that instead of  realtimePosts */}
       {realtimePosts?.docs.map((post) => (
         <Post
           key={post.id}
